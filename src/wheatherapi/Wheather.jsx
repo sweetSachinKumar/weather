@@ -101,7 +101,7 @@ let myTime = formatTimeLine(myDate)
 
 
       {/* wheather */}
-      <div style={{background:" #0000001c"}} className='  w-full     '>
+      <div style={{background:" #0000001c"}} className='  w-full  h-full   '>
         <div className='   rounded-md pt-4  mx-auto px-5'>
           {/* input search  */}
          
