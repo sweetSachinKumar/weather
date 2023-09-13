@@ -29,6 +29,9 @@ export  const DateWithMonth = () => {
         break
         case 11: monthName = "dec";
         break;
+        default:
+            console.log('some Internal problems occur')
+        break;
     }
 
 
@@ -47,6 +50,9 @@ export  const DateWithMonth = () => {
         break;
         case 6: dayName = "Saturday";
         break
+        default:
+            console.log('some Internal problems occur')
+        break;
     }
     const currentDate = `  ${dayName},  ${myDates.getDate()} ${monthName}  ${myDates.getFullYear()}`
 

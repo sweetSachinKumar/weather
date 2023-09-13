@@ -1,25 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {BiSearchAlt2} from 'react-icons/bi'
 import {DateWithMonth} from './component/myDate'
-import {formatTimeLine} from './component/myDate'
-import {IoMdPartlySunny, IoIosSunny} from 'react-icons/io'
-import { AiFillCloud} from 'react-icons/ai'
-import {BsFillCloudDrizzleFill, BsFillCloudLightningRainFill,BsFillCloudHaze2Fill, BsFillCloudRainFill,BsCloudSnowFill } from 'react-icons/bs'
+import {formatTimeLine} from './component/myDate' 
+import {BsFillCloudDrizzleFill  } from 'react-icons/bs'
 // import {BsFillCloudDrizzleFill, BsFillCloudLightningRainFill,BsFillCloudHaze2Fill, BsFillCloudRainFill,BsCloudSnowFill } from 'react-icons/bs'
 import {desideIcon} from './component/myWeatherIcon'
 const Wheather = () => {
-  const [city, setCity] = useState("")
-  const weatherIcon  = [
-  <IoMdPartlySunny/>,
-<IoIosSunny/>,
-<AiFillCloud/>,
-<BsFillCloudLightningRainFill/> ,
-<BsFillCloudHaze2Fill/>,
-<BsFillCloudRainFill/>,
-<BsCloudSnowFill/>
-]
-
-  const [showIcon, setSowIcon]  = useState(<AiFillCloud/>)
+  const [city, setCity] = useState("") 
   const [weatherData, setWeatherData] = useState({
     country:"",
     cityName:"",
