@@ -51,18 +51,7 @@ let myTime = formatTimeLine(myDate)
     }
   }
 
-
-  // decide the cloud 
-
-// switch (weatherData.moodWeather){
-//   case "Haze":
-//     setSowIcon(<BsFillCloudHaze2Fill/>)
-//     break;
-//     default:
-//       setSowIcon(<BsFillCloudRainFill/>)
-//     break
-    
-// }
+ 
 
   useEffect(() => {
   
@@ -71,9 +60,9 @@ let myTime = formatTimeLine(myDate)
   }, [search])
 
   return (
-    <div className='h-screen w-full ' style={{background:screenBg}}>
+    <div className='max-h-full min-h-screen w-full ' style={{background:screenBg}}>
       {/* navbar  */}
-      <nav className='bg-sky-500/70'>
+      <nav className='bg-sky-500/70 w-full h-full'>
         <div className=' max-w-[1140px] mx-auto shadow-md flex items-center justify-between'>
 
           <h2 className='text-2xl md:text-3xl max-w-[313px] text-white py-3 px-5 '>my Wheather app </h2>
@@ -118,7 +107,7 @@ let myTime = formatTimeLine(myDate)
             </div>
 
             {/* icon */}
-            <div className=' max-w-[850px] mx-auto  h-[400px]    flex items-center md:flex-row md:justify-around justify-center flex-col'>
+            <div className=' max-w-[850px] mx-auto h-full min-h-[280px] max-h-[400px]  flex items-center md:flex-row md:justify-around justify-center flex-col'>
               <div className=' text-[200px] md:text-[250px] mb-9'>
                 {/* <BsFillCloudHaze2Fill  /> */}
                 {/* {showIcon} */}
