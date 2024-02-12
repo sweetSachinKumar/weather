@@ -5,20 +5,9 @@ import { formatTimeLine } from './component/myDate'
 import { BsFillCloudDrizzleFill } from 'react-icons/bs'
 import { FaCloudSunRain } from 'react-icons/fa'
 import { FiCornerUpLeft } from 'react-icons/fi'
-import { IoIosArrowDropup } from 'react-icons/io'
-// import {BsFillCloudDrizzleFill, BsFillCloudLightningRainFill,BsFillCloudHaze2Fill, BsFillCloudRainFill,BsCloudSnowFill } from 'react-icons/bs'
 import { desideIcon, backgrounStyle } from './component/myWeatherIcon'
 
-// import ReactLoading from 'react-loading';
 import ReactLoading from 'react-loading'
-
-
-
-
-
-
-
-
 
 
 
@@ -26,7 +15,7 @@ const Wheather = () => {
   const [tempUnite, setTempUnite] = useState("metric")
   const [city, setCity] = useState("")
   const [isSearching, setIsSearching] = useState(false)
-  const [recentSearch, setRecentSearch] = useState(JSON.parse(localStorage.getItem("RSH")) || [] )
+  const [recentSearch, setRecentSearch] = useState(JSON.parse(localStorage.getItem("RSH")) || [])
   const [loading, setLoading] = useState(false)
   const [weatherData, setWeatherData] = useState({
     country: "",
@@ -40,7 +29,6 @@ const Wheather = () => {
   let screenBg = style
 
 
-  console.log(weatherData)
 
   const handleForm = (e) => {
     e.preventDefault()
@@ -55,7 +43,6 @@ const Wheather = () => {
   let myTime = formatTimeLine(myDate)
 
   const [search, setSearch] = useState("mumbai")
-  console.log(recentSearch)
 
   const searchHistory = (mydata) => {
     return mydata?.filter((item) => item.toLowerCase().includes(search.toLowerCase()))
@@ -66,7 +53,9 @@ const Wheather = () => {
     setIsSearching(false)
   }
 
-  const fetchData = async (unite = tempUnite ) => {
+
+
+  const fetchData = async (unite = tempUnite) => {
     try {
       setLoading(true)
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${search.trim()}&units=${unite}&appid=37bade05657cf2ed8db314803e27887e`
@@ -77,10 +66,9 @@ const Wheather = () => {
       setCity(data.main)
       if (data?.main && city.length !== 0 && recentSearch.indexOf(data?.name) === -1) {
         setRecentSearch(prev => [data.name, ...prev])
-        console.log(recentSearch)
       }
       localStorage.setItem("RSH", JSON.stringify(recentSearch))
-    
+
 
       setWeatherData({
         country: data.sys.country,
@@ -99,20 +87,24 @@ const Wheather = () => {
     }
   }
 
+  const changeFtoC = (temp) => ((temp - 32) * 5) / 9
+
   useEffect(() => {
     fetchData()
   }, [search, tempUnite])
 
   return (
     // <div className='max-h-full min-h-screen w-full ' style={{ background: screenBg }}>
-    <div className={`max-h-full min-h-screen w-full ${backgrounStyle( Number(city?.temp))} `} >
+    <div className={`max-h-full min-h-screen w-full ${backgrounStyle(!loading ? tempUnite === "metric" ? Number(city?.temp) : (((Number(city?.temp)) - 32) * 5) / 9 : "bg-gradient-to-b from-blue-400 from-30%  to-blue-500")} `} >
+    
       {/* navbar  */}
+      {/* <Navbar fetchData={fetchData} setIsSearching={setIsSearching} handleForm={handleForm} setSearch={setSearch}  search={search} /> */}
       <nav className='bg-sky-500/70 w-full h-full z-[290] '>
-        <div className=' max-w-[1140px] mx-auto shadow-md flex items-center justify-between'>
+        <div className=' max-w-[1140px] mx-auto flex items-center justify-between'>
 
           <h2 className='sm:text-2xl text-xl font-semibold md:text-3xl max-w-[313px] text-white py-3 px-5 '>Wheather app </h2>
           <form className='text-center z-[300] mr-4 flex-1 h-[40px] max-w-[513px] ms-5 relative' onSubmit={handleForm}>
-            <input  onClick={() => setIsSearching(true)} type="text" className=' w-full h-full ps-[26px] lg:pe-[70px] pe-[40px] bg-gray-200/90 border border-gray-800 rounded-full py-1 px-5 focus:outline-none focus:border-blue-400 hover:border-indigo-400  ' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='search Your City...' />
+            <input onClick={() => setIsSearching(true)} type="text" className=' w-full h-full ps-[26px] lg:pe-[70px] pe-[40px] bg-gray-200/90 border border-gray-800 rounded-full py-1 px-5 focus:outline-none focus:border-blue-400 hover:border-indigo-400  ' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='search Your City...' />
             <button onClick={fetchData} type="submit" className=' absolute top-0 right-0  text-2xl scale-90 p-2 rounded-full hover:bg-indigo-700/50 bg-indigo-600/80 transition-all duration-200 cursor-pointer'><BiSearchAlt2 /></button>
 
             {isSearching && <div className={`${searchHistory(recentSearch)?.length === 0 ? "hidden" : "block"} p-3 z-[300] overflow-hidden bg-slate-300/90 w-full min-h-full  rounded-3xl shadow-md shadow-indigo-800/20 max-h-[300px] absolute top-[110%] left-0 `}>
@@ -191,18 +183,18 @@ const Wheather = () => {
                     {/* info */}
                     <div >
                       <p className='text-5xl mb-5 flex gap-3 justify-center items-center group-temp max-w-min mx-auto  text-center font-robotos'>
-                        {parseFloat(city.temp).toFixed(1)} 
+                        {parseFloat(city.temp).toFixed(1)}
                         {/* <span onClick={ ()=> setTempUnite( tempUnite === "metric" ? "imperial" : "metric")} className='cursor-pointer flex gap-2 text-center'>
                          {tempUnite === "metric" ? <i>&#8451;</i> : <i>&#8457;</i>}
                         <i className='group-hover/temp:-mt-0.5 mt-1 transition-all duration-500'> <IoIosArrowDropup  size={25} /> </i>
                          </span>  */}
 
-                         <span className='flex flex-col font-[Arial]'>
-                         <i onClick={()=> setTempUnite("metric")} className={` cursor-pointer text-sm border-b-2 ${tempUnite === "metric"? "text-text-gray-50" : "text-gray-300"}   sm:text-base lg:text-lg`}>&#8451;</i> 
+                        <span className='flex flex-col font-[Arial]'>
+                          <i onClick={() => setTempUnite("metric")} className={` cursor-pointer text-sm border-b-2 ${tempUnite === "metric" ? "text-text-gray-50" : "text-gray-300"}   sm:text-base lg:text-lg`}>&#8451;</i>
 
-                         <i onClick={()=> setTempUnite("imperial")} className={`  cursor-pointer text-sm sm:text-base  ${tempUnite === "imperial"? "text-text-gray-50" : "text-gray-300"}  lg:text-lg`}>&#8457;</i>
-                         </span>
-                         </p>
+                          <i onClick={() => setTempUnite("imperial")} className={`  cursor-pointer text-sm sm:text-base  ${tempUnite === "imperial" ? "text-text-gray-50" : "text-gray-300"}  lg:text-lg`}>&#8457;</i>
+                        </span>
+                      </p>
 
 
                       <div className='    flex items-center justify-center space-x-20 lg:space-x-20 md:space-x-8 mt-1 '>
@@ -215,7 +207,7 @@ const Wheather = () => {
                   </div>
                   {/* another data  */}
                   <div className='        mt-12  max-w-[950px] p-3    w-full mx-auto   bg-white/5  grid grid-cols-2 gap-x-3 gap-y-3 lg:grid-cols-4'>
-                    <p className='   md:text-xl sm:text-sm text-xs  font-robotos'>feels like: <span className='text-base sm:text-xl md:text-2xl ms-1'>  {city.feels_like} &#8451;  </span></p>
+                    <p className='   md:text-xl sm:text-sm text-xs  font-robotos'>feels like: <span className='text-base sm:text-xl md:text-2xl ms-1'>  {city.feels_like} {tempUnite === "metric" ? <i>&#8451;</i> : <i>&#8457;</i>}  </span></p>
                     <p className='     md:text-base sm:text-sm text-xs  font-robotos '>humidity: <span className='text-sm sm:text-xl md:text-xl ms-1'> {city.humidity}% </span></p>
                     <p className='     md:text-base sm:text-sm text-xs  font-robotos '>wind speed: <span className='text-sm sm:text-xl md:text-xl ms-1'> {weatherData.windSpeed}km/h </span></p>
                     <p className='     md:text-base sm:text-sm text-xs  font-robotos'>pressure: <span className='text-sm sm:text-xl md:text-xl ms-1'> {city.pressure} atm  </span></p>
@@ -234,5 +226,7 @@ const Wheather = () => {
 
   )
 }
+
+
 
 export default Wheather

@@ -5,6 +5,7 @@ import {  BsFillCloudLightningRainFill,BsFillCloudHaze2Fill, BsFillCloudsFill, B
 
 
 export const backgrounStyle = (temprature) => {
+  console.log(temprature)
   if(temprature > 55) { return  " bg-gradient-to-b from-amber-500 from-30%  to-yellow-600 "}
   else if (temprature <=55 && temprature >40) { return " bg-gradient-to-b from-amber-400 from-30%  to-yellow-500 " }
   else if( temprature <=40 && temprature >30 ) { return "bg-gradient-to-b from-amber-300 from-30%  to-yellow-400 " }  
